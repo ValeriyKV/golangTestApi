@@ -1,0 +1,4 @@
+{
+  "BindAddr":":80",
+  "LogLevel":"debug"
+}
