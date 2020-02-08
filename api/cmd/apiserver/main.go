@@ -7,6 +7,10 @@ import (
 	"log"
 
 	"api/internal/app/apiserver"
+
+	"database/sql"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
@@ -22,6 +26,19 @@ func main() {
 
 	file, err := ioutil.ReadFile(configPath)
 
+	db, err := sql.Open("mysql", "root:12345678@/mydb")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = db.Begin()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("db work")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,4 +55,7 @@ func main() {
 	if err := s.Start(); err != nil {
 		log.Fatal(err)
 	}
+
+	db.Close()
+
 }
