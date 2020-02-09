@@ -45,10 +45,28 @@ func (s *APIServer) configLogger() error {
 
 func (s *APIServer) configRouter() {
 	s.router.HandleFunc("/hello", s.handleHello())
+	s.router.HandleFunc("/test", s.handleAddClass())
 }
 
 func (s *APIServer) handleHello() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "Hello")
+		switch r.Method {
+		case "GET":
+			io.WriteString(w, "Hello")
+			break
+		}
+	}
+}
+
+func (s *APIServer) handleAddClass() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case "GET":
+			http.Error(w, "404", http.StatusNotFound)
+			break
+		case "POST":
+			io.WriteString(w, "{\n\tres=fine\n}")
+			break
+		}
 	}
 }

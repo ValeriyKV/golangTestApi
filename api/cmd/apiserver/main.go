@@ -49,7 +49,7 @@ func main() {
 
 	json.Unmarshal(bytes, &config)
 
-	log.Println(config.LogLevel)
+	log.Println(config.LogLevel + " " + config.BindAddr)
 
 	s := apiserver.New(&config)
 	if err := s.Start(); err != nil {
